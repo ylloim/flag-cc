@@ -19,14 +19,16 @@ $ polymer serve
     <link rel="import" href="flag-cc.html">
     <style is="custom-style">
       flag-cc {
-        display: block;
+        display: inline-block;
         width: 24px;
-        height: 24px;
+        height: 14px;
+        margin: 10px;
       }
     </style>
-    <flag-cc currency="USD"></flag-cc>
-    <flag-cc currency="CHF"></flag-cc>
-    <flag-cc code="FR"></flag-cc>
+    USD: <flag-cc currency="USD"></flag-cc>
+    CHF: <flag-cc currency="CHF"></flag-cc>
+    FRANCE: <flag-cc code="FR"></flag-cc>
+    EUR: <flag-cc code="EUR"></flag-cc>
   </template>
 </custom-element-demo>
 ```
