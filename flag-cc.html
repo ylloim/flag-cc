@@ -6,7 +6,7 @@
   <template>
     <style>
       :host {
-        display: block;
+        display: inline-block;
         min-height: 5px;
         min-width: 5px;
       }
@@ -17,7 +17,7 @@
     </style>
     <countries-data data="{{_countries}}"></countries-data>
 
-    <iron-image sizing="cover" src$="[[_flag_src]]"></iron-image>
+    <iron-image sizing="cover" title$="[[_flag_title]]" src$="[[_flag_src]]"></iron-image>
   </template>
 
   <script>
@@ -39,15 +39,24 @@
           currency: {
             type: String
           },
+          // Outputed country
+          country: {
+            type: Object,
+            notify: true,
+            readOnly: true
+          },
           _countries: {
             type: Object
           },
           _flag_src: {
             type: String
           },
+          _flag_title: {
+            type: String
+          },
           _debouncer: {
             type: Number
-          }
+          },
         };
       }
 
@@ -60,22 +69,27 @@
       _updateFlag( _countries, code, currency) {
         if(!_countries || (!code && !currency)){ return; }
         if( this._debouncer) { clearTimeout(this._debouncer); }
-
         this._debouncer = setTimeout( () => {
+          var item = null;
           if(code) {
             code = code.toUpperCase();
             if(code.length == 2) {
-              var flag = this._countries.byCode2[code].flag;
+              item = _countries.byCode2[code];
             } else if (code.length == 3){
-              var flag = this._countries.byCode3[code].flag;
+              item = _countries.byCode3[code];
             } else {
               console.warn("FLAG-CC> unknown code", code);
             }
           } else if(currency) {
-            var flag = this._countries.currencies[currency].flag;
+            currency = currency.toUpperCase();
+            item = _countries.currencies[currency];
           }
-          this._flag_src = this.resolveUrl('flags/'+flag);
-        }, 10);
+          if(item) {
+            this._flag_src = this.resolveUrl('flags/'+item.flag);
+            this._flag_title = code ? item.name : item.currencyFull;
+            this.countries = item;
+          }
+        }, 1);
       }
     }
 
