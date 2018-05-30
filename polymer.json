@@ -1,4 +1,8 @@
 {
+  "extraDependencies": [
+    "flags/currencies/*",
+    "flags/countries/*"
+  ],
   "lint": {
     "rules": [
       "polymer-2"
