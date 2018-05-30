@@ -1,0 +1,79 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../iron-image/iron-image.html">
+<link rel="import" href="./countries-data.html">
+
+<dom-module id="flag-cc">
+  <template>
+    <style>
+      :host {
+        display: block;
+        min-height: 5px;
+        min-width: 5px;
+      }
+      iron-image {
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+    <countries-data data="{{_countries}}"></countries-data>
+
+    <iron-image sizing="cover" src$="[[_flag_src]]"></iron-image>
+  </template>
+
+  <script>
+    /**
+     * `flag-cc`
+     * A simple component that displays the flag and some information about the currency and the country.
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class FlagCc extends Polymer.Element {
+      static get is() { return 'flag-cc'; }
+      static get properties() {
+        return {
+          code: {
+            type: String
+          },
+          currency: {
+            type: String
+          },
+          _countries: {
+            type: Object
+          },
+          _flag_src: {
+            type: String
+          }
+        };
+      }
+
+      static get observers(){
+        return [
+          "_updateFlag(_countries, code, currency)"
+        ]
+      }
+
+      _updateFlag( _countries, code, currency) {
+        if(!_countries || (!code && !currency)){ return; }
+        console.log(_countries, code, currency);
+        if(code) {
+          code = code.toUpperCase();
+          if(code.length == 2) {
+            var flag = this._countries.byCode2[code].flag;
+          } else if (code.length == 3){
+            var flag = this._countries.byCode3[code].flag;
+          } else {
+            console.warn("FLAG-CC> unknown code", code);
+          }
+        } else if(currency) {
+          var flag = this._countries.currencies[currency].flag;
+        }
+        this._flag_src = this.resolveUrl('flags/'+flag);
+        console.log(this._flag_src);
+      }
+    }
+
+    window.customElements.define(FlagCc.is, FlagCc);
+  </script>
+</dom-module>
