@@ -39,3 +39,11 @@ $ polymer test
 ```
 
 Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.
+
+## Build notes
+
+Please be sure to add the `extraDependencies`:
+
+- "bower_components/flag-cc/flags/**/*"
+
+to your `polymer.json`
