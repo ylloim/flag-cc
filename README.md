@@ -12,6 +12,30 @@ First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polyme
 $ polymer serve
 ```
 
+<!--
+```
+<custom-element-demo>
+  <template>
+    <link rel="import" href="flag-cc.html">
+    <style is="custom-style">
+      flag-cc {
+        display: block;
+        width: 24px;
+        height: 24px;
+      }
+    </style>
+    <flag-cc currency="USD"></flag-cc>
+    <flag-cc currency="CHF"></flag-cc>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<flag-cc currency="USD"></flag-cc>
+<flag-cc currency="CHF"></flag-cc>
+<flag-cc code2="FR"></flag-cc>
+```
+
 ## Running Tests
 
 ```
