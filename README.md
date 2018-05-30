@@ -26,7 +26,7 @@ $ polymer serve
     </style>
     <flag-cc currency="USD"></flag-cc>
     <flag-cc currency="CHF"></flag-cc>
-    <flag-cc code2="FR"></flag-cc>
+    <flag-cc code="FR"></flag-cc>
   </template>
 </custom-element-demo>
 ```
