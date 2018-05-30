@@ -44,6 +44,9 @@
           },
           _flag_src: {
             type: String
+          },
+          _debouncer: {
+            type: Number
           }
         };
       }
@@ -56,21 +59,23 @@
 
       _updateFlag( _countries, code, currency) {
         if(!_countries || (!code && !currency)){ return; }
-        console.log(_countries, code, currency);
-        if(code) {
-          code = code.toUpperCase();
-          if(code.length == 2) {
-            var flag = this._countries.byCode2[code].flag;
-          } else if (code.length == 3){
-            var flag = this._countries.byCode3[code].flag;
-          } else {
-            console.warn("FLAG-CC> unknown code", code);
+        if( this._debouncer) { clearTimeout(this._debouncer); }
+
+        this._debouncer = setTimeout( () => {
+          if(code) {
+            code = code.toUpperCase();
+            if(code.length == 2) {
+              var flag = this._countries.byCode2[code].flag;
+            } else if (code.length == 3){
+              var flag = this._countries.byCode3[code].flag;
+            } else {
+              console.warn("FLAG-CC> unknown code", code);
+            }
+          } else if(currency) {
+            var flag = this._countries.currencies[currency].flag;
           }
-        } else if(currency) {
-          var flag = this._countries.currencies[currency].flag;
-        }
-        this._flag_src = this.resolveUrl('flags/'+flag);
-        console.log(this._flag_src);
+          this._flag_src = this.resolveUrl('flags/'+flag);
+        }, 10);
       }
     }
 
