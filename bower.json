@@ -1,0 +1,17 @@
+{
+  "name": "flag-cc",
+  "description": "A simple component that displays the flag and some information about the currency and the country.",
+  "main": "flag-cc.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.0.0",
+    "iron-image": "polymerelements/iron-image#^2.2.1"
+  },
+  "devDependencies": {
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
+    "web-component-tester": "Polymer/web-component-tester#^6.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
+  },
+  "resolutions": {
+    "polymer": "^2.0.0"
+  }
+}
