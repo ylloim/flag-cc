@@ -38,6 +38,7 @@
     <countries-data data="{{_countries}}"></countries-data>
 
     <iron-image sizing="cover" title$="[[_flag_title]]" src$="[[_flag_src]]"></iron-image>
+    <span id="unknown_display"></span>
     <div id="overlay"></div>
   </template>
 
@@ -126,9 +127,14 @@
           if(item) {
             this._flag_src = this.resolveUrl(_flag_src);
             this._flag_title = code ? item.name : item.currencyFull;
-            this.countries = item;
-            this.flagType = _flag_type;
+            this.$.unknown_display.innerText = "";
+          } else {
+            this._flag_src = "";
+            this._flag_title = code != undefined ? code : currency;
+            this.$.unknown_display.innerText = this._flag_title;
           }
+          this.countries = item;
+          this.flagType = _flag_type;
         }, 1);
       }
     }
