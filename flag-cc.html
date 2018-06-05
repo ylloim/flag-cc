@@ -105,14 +105,22 @@
             } else if (code.length == 3){
               item = _countries.byCode3[code];
             } else {
-              console.warn("FLAG-CC> unknown code", code);
+              console.warn("FLAG-CC> code length should be either 2 or 3", code);
             }
-            _flag_src = "flags/countries/"+item.flag;
+            if(item) {
+              _flag_src = "flags/countries/"+item.flag;
+            } else {
+              console.warn("The item was not found for code", code);
+            }
             _flag_type = "country";
           } else if(currency) {
             currency = currency.toUpperCase();
             item = _countries.currencies[currency];
-            _flag_src = "flags/currencies/"+item.flag;
+            if(item) {
+              _flag_src = "flags/currencies/"+item.flag;
+            } else {
+              console.warn("The item was not found for currency", currency);
+            }
             _flag_type = "currency";
           }
           if(item) {
