@@ -20,8 +20,12 @@
         max-width: 22px;
         border: 1px solid #333333;
       }
+      :host([is-unknown]) {
+        border: none;
+      }
 
       #overlay {
+        pointer-events: none;
         position: absolute;
         width: 100%;
         height: 100%;
@@ -34,12 +38,18 @@
         background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
       }
+
+      iron-image[hidden],
+      #overlay[hidden] {
+        display: none;
+      }
+
     </style>
     <countries-data data="{{_countries}}"></countries-data>
 
-    <iron-image sizing="cover" title$="[[_flag_title]]" src$="[[_flag_src]]"></iron-image>
+    <iron-image sizing="cover" title$="[[_flag_title]]" src$="[[_flag_src]]" hidden$="[[isUnknown]]"></iron-image>
     <span id="unknown_display"></span>
-    <div id="overlay"></div>
+    <div id="overlay" hidden$="[[isUnknown]]"></div>
   </template>
 
   <script>
@@ -82,6 +92,10 @@
           flagType: {
             type: String,
             reflectToAttribute: true
+          },
+          isUnknown: {
+            type: Boolean,
+            reflectToAttribute: true
           }
         };
       }
@@ -97,8 +111,8 @@
         if( this._debouncer) { clearTimeout(this._debouncer); }
         this._debouncer = setTimeout( () => {
           var item = null;
-          var _flag_src = "";
-          var _flag_type = null;
+          var flag_src = "";
+          var flag_type = null;
           if(code) {
             code = code.toUpperCase();
             if(code.length == 2) {
@@ -106,35 +120,37 @@
             } else if (code.length == 3){
               item = _countries.byCode3[code];
             } else {
-              console.warn("FLAG-CC> code length should be either 2 or 3", code);
+              console.warn("FLAG-CC> code length should be either 2 or 3 (code:", code, ")");
             }
             if(item) {
-              _flag_src = "flags/countries/"+item.flag;
+              flag_src = "flags/countries/"+item.flag;
             } else {
               console.warn("The item was not found for code", code);
             }
-            _flag_type = "country";
+            flag_type = "country";
           } else if(currency) {
             currency = currency.toUpperCase();
             item = _countries.currencies[currency];
             if(item) {
-              _flag_src = "flags/currencies/"+item.flag;
+              flag_src = "flags/currencies/"+item.flag;
             } else {
               console.warn("The item was not found for currency", currency);
             }
-            _flag_type = "currency";
+            flag_type = "currency";
           }
           if(item) {
-            this._flag_src = this.resolveUrl(_flag_src);
-            this._flag_title = code ? item.name : item.currencyFull;
+            this._flag_src = this.resolveUrl(flag_src);
+            this._flag_title = code != undefined ? item.name : item.currency;
+            this.isUnknown = false;
             this.$.unknown_display.innerText = "";
           } else {
             this._flag_src = "";
             this._flag_title = code != undefined ? code : currency;
+            this.isUnknown = true;
             this.$.unknown_display.innerText = this._flag_title;
           }
           this.countries = item;
-          this.flagType = _flag_type;
+          this.flagType = flag_type;
         }, 1);
       }
     }
