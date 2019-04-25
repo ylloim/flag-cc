@@ -1,11 +1,15 @@
 {
+  "fragments": [
+    "flag-cc.js"
+  ],
   "extraDependencies": [
     "flags/currencies/*",
     "flags/countries/*"
   ],
+  "npm": true,
   "lint": {
     "rules": [
-      "polymer-2"
+      "polymer-3"
     ]
   }
 }

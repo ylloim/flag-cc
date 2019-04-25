@@ -1,32 +1,49 @@
 {
   "name": "flag-cc",
   "version": "0.0.12",
-  "description": "A simple component that displays the flag and some information about the currency and the country.",
-  "main": "index.html",
-  "directories": {
-    "test": "test"
-  },
+  "description": "A simple component displaying the flag and information for currencies and countries.",
+  "main": "flag-cc.js",
+  "author": "Yves Lange <yveslange.spam@gmail.com>",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:doc": "polymer analyze > analysis.json",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "./node_modules/.bin/polymer serve --npm --module-resolution node"
   },
+  "license": "ISC",
+  "dependencies": {
+    "@polymer/polymer": "^3.2.0",
+    "@polymer/iron-image": "^3.0.1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^7.5.2",
+    "@commitlint/config-conventional": "^7.5.0",
+    "@polymer/iron-demo-helpers": "^3.1.0",
+    "@polymer/iron-component-page": "^4.0.1",
+    "@polymer/test-fixture": "^4.0.2",
+    "@webcomponents/webcomponentsjs": "^2.2.10",
+    "chai": "^4.2.0",
+    "husky": "^1.3.1",
+    "mocha": "^5.2.0",
+    "wct-mocha": "^1.0.0"
+  },
+  "keywords": [
+    "flags",
+    "icons",
+    "currency",
+    "currencies",
+    "country",
+    "countries",
+    "code2",
+    "code3",
+    "polymer",
+    "component"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yveslange/flag-cc.git"
   },
-  "keywords": [
-    "polymer",
-    "flags",
-    "currency",
-    "code2",
-    "code3",
-    "country",
-    "flags",
-    "countries"
-  ],
-  "author": "Yves Lange <yveslange.spam@gmail.com>",
-  "license": "ISC",
+  "homepage": "https://github.com/yveslange/flag-cc#readme",
   "bugs": {
     "url": "https://github.com/yveslange/flag-cc/issues"
-  },
-  "homepage": "https://github.com/yveslange/flag-cc#readme"
+  }
 }
