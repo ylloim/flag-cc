@@ -169,6 +169,7 @@ class FlagCc extends PolymerElement {
         } else {
           console.warn("The item was not found for currency", currency);
         }
+        flag_src = this.resolveUrl(flag_src);
         flag_type = "currency";
       }
       if(item) {
