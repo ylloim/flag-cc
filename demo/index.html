@@ -1,72 +1,86 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 
-    <title>‹flag-cc›</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 
-    <script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-    <script type="module" src="/node_modules/@polymer/iron-demo-helpers/demo-pages-shared-styles.js"></script>
-    <script type="module" src="/node_modules/@polymer/iron-demo-helpers/demo-snippet.js"></script>
+  <title>‹flag-cc›</title>
 
-    <script type="module">
-      import '../flag-cc.js';
-    </script>
-  </head>
+  <script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+  <script type="module" src="/node_modules/@polymer/iron-demo-helpers/demo-pages-shared-styles.js"></script>
+  <script type="module" src="/node_modules/@polymer/iron-demo-helpers/demo-snippet.js"></script>
 
-  <!-- Hack to have polymer @apply mixins and browser-sync to work -->
   <script type="module">
-    const $_documentContainer = document.createElement('template');
-    $_documentContainer.innerHTML = `
+    import '../flag-cc.js';
+  </script>
+</head>
+
+<!-- Hack to have polymer @apply mixins and browser-sync to work -->
+<script type="module">
+  const $_documentContainer = document.createElement('template');
+  $_documentContainer.innerHTML = `
     <custom-style>
       <style is="custom-style" include="demo-pages-shared-styles"></style>
     </custom-style>`;
-    document.body.appendChild($_documentContainer.content);
-  </script>
+  document.body.appendChild($_documentContainer.content);
+</script>
 
-  <body unresolved>
-    <div class="polymer-demo vertical-section-container centered">
-      <h1 id="flag-cc">‹flag-cc›</h1>
-      <div class="polymer-description">
-        <code>‹flag-cc›</code> is a simple component that convert a currency or country code to its flag.
-        Note: the name stands for "flag currencies and countries".
-        <br><br>
-        <div class="polymer-info">
-          See:
-            <a href="../docs.html#/elements/flag-cc" target="_blank">Documentation</a>
-            <a href="#flag-cc">Demo</a>
-        </div>
+<body unresolved>
+  <div class="polymer-demo vertical-section-container centered">
+    <h1 id="flag-cc">‹flag-cc›</h1>
+    <div class="polymer-description">
+      <code>‹flag-cc›</code> is a simple component that convert a currency or country code to its flag.
+      Note: the name stands for "flag currencies and countries".
+      <br><br>
+      <div class="polymer-info">
+        See:
+        <a href="../docs.html#/elements/flag-cc" target="_blank">Documentation</a>
+        <a href="#flag-cc">Demo</a>
       </div>
-      <br>
-      <demo-snippet>
-        <style>
-          flag-cc[flag-type='country']{
-            width: 50px;
-            height: 30px;
-            border: 1px solid #444;
-            font-size: 5px;
-          }
-        </style>
-        <template>
-
-          <h3>Currency flags</h3>
-          <flag-cc currency="CHF"></flag-cc>
-          <flag-cc currency="CNY"></flag-cc>
-          <flag-cc currency="CNH"></flag-cc>
-          <flag-cc currency="ABC"></flag-cc>
-
-          <h3>Country flags</h3>
-          <flag-cc code="FR"></flag-cc>
-          <flag-cc code="CH"></flag-cc>
-          <flag-cc code="ESP"></flag-cc>
-          <flag-cc code="BRA"></flag-cc>
-          <flag-cc code="Unknown"></flag-cc>
-
-        </template>
-      </demo-snippet>
-
-
     </div>
-  </body>
+    <br>
+    <demo-snippet>
+      <style>
+        flag-cc[flag-type='country'] {
+          width: 50px;
+          height: 30px;
+          border: 1px solid #444;
+          font-size: 5px;
+        }
+      </style>
+      <template>
+
+        <h3>Currency flags</h3>
+        <flag-cc currency="CHF"></flag-cc>
+        <flag-cc currency="CNY"></flag-cc>
+        <flag-cc currency="CNH"></flag-cc>
+        <flag-cc currency="ABC"></flag-cc>
+
+        <h3>Country flags</h3>
+        <flag-cc code="FR"></flag-cc>
+        <flag-cc code="CH"></flag-cc>
+        <flag-cc code="ESP"></flag-cc>
+        <flag-cc code="BRA"></flag-cc>
+        <flag-cc code="Unknown"></flag-cc>
+
+        <!--
+        This is how you can change the images path where all the flags are located.
+        By defaults, the images are loaded from '/node_modules/flag-cc/flags/'. In the demo,
+        we need to change to locate the files from `../flags/`
+        -->
+        <script>
+          let els = document.querySelectorAll("flag-cc");
+          els.forEach((el) => {
+            el.imagesPath = "../flags/";
+          })
+        </script>
+
+      </template>
+    </demo-snippet>
+
+
+  </div>
+</body>
+
 </html>
