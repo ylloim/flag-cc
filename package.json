@@ -1,6 +1,6 @@
 {
   "name": "flag-cc",
-  "version": "0.0.14",
+  "version": "1.0.0",
   "description": "A simple component displaying the flag and information for currencies and countries.",
   "main": "flag-cc.js",
   "author": "Yves Lange <yveslange.spam@gmail.com>",
