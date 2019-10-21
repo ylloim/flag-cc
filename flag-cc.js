@@ -1,29 +1,30 @@
-import { html } from "@polymer/polymer/lib/utils/html-tag.js";
-import { PolymerElement } from "@polymer/polymer/polymer-element.js";
+import { LitElement, html } from "lit-element";
 import "@polymer/iron-image/iron-image.js";
-import "./countries-data.js";
+
+import CountriesDataProvider from "./countries-data-provider.js";
 
 /**
-<flag-cc> is a simple component that convert a currency or country code to
-its flag.
+<flag-cc> is a simple component that display the flag of the corresponding currency or country code.
+
+Use the `currency` attribute to display the currency flag and use `code` to display the country flag.
 
 # Example
 
 ```
 <flag-cc currency="CHF"></flag-cc>
-<flag-cc code="FR"></flag-cc>
 <flag-cc currency="CNY"></flag-cc>
 <flag-cc currency="CNH"></flag-cc>
-<flag-cc code="Unknown"></flag-cc>
 <flag-cc currency="ABC"></flag-cc>
+<flag-cc code="Unknown"></flag-cc>
+<flag-cc code="FR"></flag-cc>
 ```
 
 @customElement
 @polymer
 @demo demo/index.html
  */
-class FlagCc extends PolymerElement {
-  static get template() {
+class FlagCC extends LitElement {
+  render() {
     return html`
       <style>
         :host {
@@ -83,96 +84,92 @@ class FlagCc extends PolymerElement {
           font-size: inherit;
           position: absolute;
           top: 0;
+          left: 0;
+          font-size: 9px;
         }
       </style>
-
-      <!-- A collection of countries, codes and flags -->
-      <countries-data data="{{_countries}}"></countries-data>
 
       <!-- The flag to display -->
       <iron-image
         sizing="cover"
-        title\$="[[_flag_title]]"
-        src\$="[[imagesPath]][[_flag_src]]"
+        title="${this._flag_title}"
+        src="${this.imagesPath}${this._flag_src}"
       ></iron-image>
+
       <span id="unknown_display"></span>
-      <div id="overlay" hidden\$="[[isUnknown]]"></div>
+
+      <div id="overlay" ?hidden="${this.isUnknown}"></div>
     `;
   }
 
-  static get is() {
-    return "flag-cc";
-  }
   static get properties() {
     return {
       /** The country code (eg: CH, FR, ...) */
-      code: {
-        type: String
-      },
+      code: String,
 
       /** The currency code (eg: EUR, CNY, CHF, ...) */
-      currency: {
-        type: String
-      },
+      currency: String,
 
       /** The type of the flag ('country' or 'currency') */
-      flagType: {
-        type: String,
-        reflectToAttribute: true
-      },
+      // TODO: reflect to attribute
+      flagType: { type: String, attribute: "flag-type", reflect: true },
 
       /** Is true if the country or currency code is unknown */
-      isUnknown: {
-        type: Boolean,
-        reflectToAttribute: true
-      },
+      isUnknown: Boolean,
 
       /** The corresponding country either for the country or currency code */
-      country: {
-        type: Object,
-        notify: true,
-        readOnly: true
-      },
+      // TODO: generate an event to propagate the information
+      country: Object,
 
       /** Configures where the images folder is located */
-      imagesPath: {
-        type: String,
-        value: () => {
-          return "/node_modules/flag-cc/flags/";
-        }
-      },
+      imagesPath: String,
 
       /** PRIVATES */
-      _countries: {
-        type: Object
-      },
-      _flag_src: {
-        type: String
-      },
-      _flag_title: {
-        type: String
-      },
-      _debouncer: {
-        type: Number
-      }
+      _countries: Object,
+      _flag_src: String,
+      _flag_title: String,
+      _debouncer: Number
     };
   }
 
-  static get observers() {
-    return ["_updateFlag(_countries, code, currency)"];
+  constructor() {
+    super();
+
+    // Set the path of the images
+    this.imagesPath = "/node_modules/flag-cc/flags/";
   }
 
-  _updateFlag(_countries, code, currency) {
+  firstUpdated(changedProps) {
+    this._DOM_UnknownDisplay = this.shadowRoot.querySelector(
+      "#unknown_display"
+    );
+    console.log(this._DOM_UnknownDisplay);
+  }
+
+  updated(props) {
+    if (props.has("code") || props.has("currency")) {
+      this._updateFlag(this.code, this.currency);
+    }
+  }
+
+  _updateFlag(code, currency) {
+    // Get the static list of countries
+    let _countries = CountriesDataProvider.data;
+
+    // Stops the updates when the list of countries and if one of the code or
+    // currency is not defined
     if (!_countries || (!code && !currency)) {
       return;
     }
+
+    // Create a debouncer
     if (this._debouncer) {
       clearTimeout(this._debouncer);
     }
     this._debouncer = setTimeout(() => {
-      var item = null;
-      var flag_src = "";
-      var flag_type = null;
+      var item = null; // ?
+      var flag_src = ""; // The relative flag image source path
+      var flag_type = null; // The flag type (currency or country)
       if (code) {
         code = code.toUpperCase();
         if (code.length == 2) {
@@ -207,12 +204,12 @@ class FlagCc extends PolymerElement {
         this._flag_src = flag_src;
         this._flag_title = code != undefined ? item.name : item.currency;
         this.isUnknown = false;
-        this.$.unknown_display.innerText = "";
+        this._DOM_UnknownDisplay.innerText = "";
       } else {
         this._flag_src = "";
         this._flag_title = code != undefined ? code : currency;
         this.isUnknown = true;
-        this.$.unknown_display.innerText = this._flag_title;
+        this._DOM_UnknownDisplay.innerText = this._flag_title;
       }
       this.countries = item;
       this.flagType = flag_type;
@@ -220,4 +217,4 @@ class FlagCc extends PolymerElement {
   }
 }
 
-window.customElements.define(FlagCc.is, FlagCc);
+customElements.define("flag-cc", FlagCC);
