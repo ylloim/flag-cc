@@ -1,6 +1,13 @@
 # \<flag-cc\>
+A simple component that displays the flag of a
+specific currency or country code.
 
-A simple component that displays the flag and some information about the currency and the country.
+# IMPORTANT CHANGE
+Since version 1.0.0, this component uses
+`lit-element`. The API didn't changed but some
+optimization were done in order to reduce the memory
+footprint of this component.
+
 
 ## Install the Polymer-CLI
 
@@ -27,12 +34,14 @@ $ polymer serve
     </style>
     USD: <flag-cc currency="USD"></flag-cc>
     CHF: <flag-cc currency="CHF"></flag-cc>
-    FRANCE: <flag-cc code="FR"></flag-cc>
     EUR: <flag-cc code="EUR"></flag-cc>
+    FRANCE: <flag-cc code="FR"></flag-cc>
   </template>
 </custom-element-demo>
 ```
 -->
+
+Check the `demos/` for more examples
 
 ## Running Tests
 
@@ -46,6 +55,8 @@ Your application is already set up to be tested via [web-component-tester](https
 
 Please be sure to add the `extraDependencies`:
 
-- "bower_components/flag-cc/flags/**/*"
+```
+"node_modules/flag-cc/flags/**/*"
+```
 
 to your `polymer.json`
