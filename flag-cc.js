@@ -143,7 +143,6 @@ class FlagCC extends LitElement {
     this._DOM_UnknownDisplay = this.shadowRoot.querySelector(
       "#unknown_display"
     );
-    console.log(this._DOM_UnknownDisplay);
   }
 
   updated(props) {
