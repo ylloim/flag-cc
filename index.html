@@ -1,16 +1,77 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="refresh" content="0;url=/demo/" />
-    <title>flag-cc</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes"/>
+
+    <title>‹flag-cc›</title>
+
+    <script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+
+    <script type="module">
+      import "./index.js";
+    </script>
   </head>
+
   <body>
-    <!--
-        ELEMENT API DOCUMENTATION SUPPORT COMING SOON
-        Visit demo/index.html to see live examples of your element running.
-        This page will automatically redirect you there when run in the browser
-        with `polymer serve`.
-      -->
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Baloo+Tamma+2&display=swap');
+      body {
+        font-family: "Baloo Tamma 2";
+      }
+      .example {
+        display: flex;
+        flex-direction: row;
+      }
+      .example > * {
+        margin-right: 5px;
+      }
+      flag-cc[flag-type="currency"] {
+        width: 20px;
+        max-width: 20px;
+        height: 15px;
+        max-height: 15px;
+        border: 1px solid #333;
+      }
+      flag-cc[flag-type="country"] {
+        width: 50px;
+        height: 30px;
+        font-size: 5px;
+        border: 1px solid #333;
+      }
+    </style>
+      <h1>Flag-CC examples</h1>
+      <p>
+        Here stands some examples to show you how to use flag-cc. Please use the
+        source code in order to see how this is done. In the first example you
+        will see some flags that are displayed using the currency name and in
+        the second example how to use a flag with the country code.
+        <br>
+        Documentation <a href="./README.md">README</a>
+      </p>
+      <h3>Currency flags</h3>
+      <div class="example">
+        <flag-cc currency="CHF"></flag-cc>
+        <flag-cc currency="CNY"></flag-cc>
+        <flag-cc currency="CNH"></flag-cc>
+        <flag-cc currency="ABC"></flag-cc>
+      </div>
+
+      <h3>Country flags</h3>
+      <div class="example">
+        <flag-cc code="FR"></flag-cc>
+        <flag-cc code="CH"></flag-cc>
+        <flag-cc code="ESP"></flag-cc>
+        <flag-cc code="BRA"></flag-cc>
+        <flag-cc code="Unknown"></flag-cc>
+      </div>
+
+      <!-- DON'T DO THIS, THIS IS JUST FOR THE DEMO -->
+      <script>
+        let els = document.querySelectorAll("flag-cc");
+        els.forEach(el => {
+          el.imagesPath = "./flags/";
+        });
+      </script>
   </body>
 </html>

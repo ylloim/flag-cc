@@ -1,62 +1,71 @@
-# \<flag-cc\>
-A simple component that displays the flag of a
-specific currency or country code.
+# flag-cc
 
-# IMPORTANT CHANGE
-Since version 1.0.0, this component uses
-`lit-element`. The API didn't changed but some
-optimization were done in order to reduce the memory
-footprint of this component.
+<flag-cc> is a simple web component that display the flag of the
+corresponding currency or country code.  Use the `currency` attribute to
+display the currency flag or use `code` to display the country flag.
 
+If the flag is not found, it will displays either the `currency` or the
+`code` that was specified by the user.
 
-## Install the Polymer-CLI
+![screenshot](./screenshot.png)
 
-First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your element locally.
-
-## Viewing Your Element
+## Installation and demo
+This library depends on the famous LitElement library. To see the demo
+locally in action please:
 
 ```
-$ polymer serve
+git clone https://github.com/yveslange/flag-cc.git
+cd flag-cc && npm install
+npm start
 ```
 
-<!--
-```
-<custom-element-demo>
-  <template>
-    <link rel="import" href="flag-cc.html">
-    <style is="custom-style">
-      flag-cc {
-        display: inline-block;
-        width: 24px;
-        height: 14px;
-        margin: 10px;
-      }
-    </style>
-    USD: <flag-cc currency="USD"></flag-cc>
-    CHF: <flag-cc currency="CHF"></flag-cc>
-    EUR: <flag-cc code="EUR"></flag-cc>
-    FRANCE: <flag-cc code="FR"></flag-cc>
-  </template>
-</custom-element-demo>
-```
--->
+You can build the source by running `npm run build`. The built distribution
+will be located into `./build/`.
 
-Check the `demos/` for more examples
 
-## Running Tests
+## How to use
 
+In your `index.html`:
 ```
-$ polymer test
+  <head>
+    <script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script type="module" src="./node_modules/flag-cc/index.js"></script>
 ```
 
-Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.
-
-## Build notes
-
-Please be sure to add the `extraDependencies`:
-
+Then you should be able to use \<flag-cc\> tag anywhere.
+```javascript
+<flag-cc currency="CHF"></flag-cc>
+<flag-cc currency="CNY"></flag-cc>
+<flag-cc currency="CNH"></flag-cc>
+<flag-cc currency="ABC"></flag-cc>
+<flag-cc code="Unknown"></flag-cc>
+<flag-cc code="FR"></flag-cc>
 ```
-"node_modules/flag-cc/flags/**/*"
+
+## Technical
+The flags will be searched in `./node_modules/flag-cc/flags/`. If you want to
+change the path please refer to the property `imagesPath`.
+
+## Example
+
+```javascript
+index.html
 ```
 
-to your `polymer.json`
+## Properties
+
+| Property     | Attribute     | Type      | Default                         | Description                                      |
+|--------------|---------------|-----------|---------------------------------|--------------------------------------------------|
+| `code`       | `code`        |           |                                 | The country code (eg: CH, FR, ...)               |
+| `country`    | `country`     |           |                                 | The corresponding country name                   |
+| `currency`   | `currency`    |           |                                 | The currency code (eg: EUR, CNY, CHF, ...)       |
+| `flagType`   | `flag-type`   | `string`  |                                 | The type of the flag ('country' or 'currency')   |
+| `imagesPath` | `images-path` | `string`  | "./node_modules/flag-cc/flags/" | Configures where the images folder is located    |
+| `isUnknown`  | `is-unknown`  | `boolean` |                                 | Is true if the country or currency code is unknown. This is set by<br />flag-cc if the flag was not found. |
+
+## Methods
+
+| Method            | Type                         | Description                                      |
+|-------------------|------------------------------|--------------------------------------------------|
+| `getCountryFlag`  | `(code?: string): String`    | Retreive the country flag using the code<br /><br />**code**: The country code. |
+| `getCurrencyFlag` | `(currency: string): String` | Retreive the currency flag using the currency name.<br /><br />**currency**: The currency name to use (eg: CHF, EUR, ...). |
