@@ -18,9 +18,12 @@ git clone https://github.com/yveslange/flag-cc.git
 cd flag-cc && npm install
 npm start
 ```
+Now you can navigate to `http://localhost:8000`
 
 You can build the source by running `npm run build`. The built distribution
-will be located into `./build/`.
+will be located into `./build/`. Additionally, you can serve the built
+
+
 
 
 ## How to use
@@ -45,12 +48,6 @@ Then you should be able to use \<flag-cc\> tag anywhere.
 ## Technical
 The flags will be searched in `./node_modules/flag-cc/flags/`. If you want to
 change the path please refer to the property `imagesPath`.
-
-## Example
-
-```javascript
-index.html
-```
 
 ## Properties
 

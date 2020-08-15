@@ -39,7 +39,7 @@ import CountriesDataProvider from './countries-data-provider.js';
  * ```
  *
  * Then you should be able to use \<flag-cc\> tag anywhere.
- * ```javascript
+ * ```html
  * <flag-cc currency="CHF"></flag-cc>
  * <flag-cc currency="CNY"></flag-cc>
  * <flag-cc currency="CNH"></flag-cc>
